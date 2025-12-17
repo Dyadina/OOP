@@ -1,0 +1,28 @@
+flowchart LR
+    Trainer[Тренер]
+    Client[Клієнт]
+    Device[Фітнес пристрій]
+
+    subgraph APP[Fitness Plan App]
+        UC1[Створити план на місяць]
+        UC2[Переглянути план]
+        UC3[Відмітити виконання тренування]
+        UC4[Оцінити самопочуття]
+        UC5[Передати дані пульсу і сну]
+        UC6[Зафіксувати травму]
+        UC7[Скоригувати навантаження]
+    end
+
+    Trainer --> UC1
+    Trainer --> UC7
+
+    Client --> UC2
+    Client --> UC3
+    Client --> UC4
+    Client --> UC6
+
+    Device --> UC5
+
+    UC3 -. include .-> UC2
+    UC7 -. extend .-> UC6
+    UC4 -. extend .-> UC3

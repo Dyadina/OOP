@@ -1,0 +1,23 @@
+# Скомпільовані Java класи
+*.class
+
+# Файли jar/war
+*.jar
+*.war
+
+# IDE файли
+.idea/
+.vscode/
+*.iml
+*.swp
+*.swo
+*~
+
+# Binaries
+bin/
+build/
+out/
+
+# OS файли
+.DS_Store
+Thumbs.db

@@ -1,0 +1,29 @@
+Trainer
+
+Responsibilities: формує план на місяць; аналізує травму; коригує навантаження.
+
+Collaborators: FitnessApp, MonthlyPlan, LoadAdjustment, InjuryReport.
+
+Client
+
+Responsibilities: переглядає план; відмічає виконання; оцінює самопочуття; фіксує травму.
+
+Collaborators: FitnessApp, MonthlyPlan, WorkoutSession, InjuryReport.
+
+WearableDevice (IHealthDataProvider)
+
+Responsibilities: збирає пульс/сон; передає дані у застосунок.
+
+Collaborators: FitnessApp, HealthData.
+
+FitnessApp
+
+Responsibilities: зберігає план; приймає health-дані; застосовує коригування; надає план клієнту.
+
+Collaborators: Trainer, Client, MonthlyPlan, IHealthDataProvider.
+
+MonthlyPlan
+
+Responsibilities: містить тренування на місяць; видає сесію; додає сесію.
+
+Collaborators: WorkoutSession, FitnessApp, Trainer, Client.

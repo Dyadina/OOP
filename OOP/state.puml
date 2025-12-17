@@ -1,0 +1,29 @@
+sequenceDiagram
+  actor Trainer as Тренер
+  actor Client as Клієнт
+  participant Device as Пристрій
+  participant App as FitnessApp
+  participant Plan as MonthlyPlan
+
+  Trainer->>App: savePlan(createMonthlyPlan(clientId, month))
+  App-->>Trainer: OK (план збережено)
+
+  Client->>App: viewPlan()
+  App-->>Client: Plan
+
+  Client->>App: markWorkoutDone(sessionId)
+  App->>Plan: getSession(sessionId)
+  Plan-->>App: WorkoutSession
+  App-->>Client: OK (відмічено)
+
+  Client->>App: rateWellbeing(score)
+  App-->>Client: OK (самопочуття збережено)
+
+  Device->>App: pushHealthData()
+  App-->>Device: OK (дані прийнято)
+
+  Client->>App: reportInjury(desc)
+  App-->>Client: InjuryReport(status=NEW)
+
+  Trainer->>App: applyLoadAdjustment(adjustLoad(plan, "injury"))
+  App-->>Trainer: OK (навантаження скориговано)
