@@ -21,3 +21,4 @@ out/
 # OS файли
 .DS_Store
 Thumbs.db
+target/

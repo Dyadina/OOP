@@ -1,3 +1,4 @@
+package com.fitness;
 // Клас для реєстрації та управління травмами
 public class InjuryReport {
     // Тип травми

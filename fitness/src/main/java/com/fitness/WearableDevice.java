@@ -1,3 +1,4 @@
+package com.fitness;
 // Клас для представлення носимого фітнес-пристрою, який імплементує DataProvider
 public class WearableDevice implements DataProvider {
     // Унікальний ID пристрою
