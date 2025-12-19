@@ -11,7 +11,7 @@ import com.google.inject.Inject;
 public class FitnessApp {
 
     // DI: залежність від сервісу збереження в БД
-    private final WorkoutSessionService workoutSessionService;
+    private WorkoutSessionService workoutSessionService;
 
     private List<Client> clients;
     private List<Trainer> trainers;
@@ -27,20 +27,27 @@ public class FitnessApp {
         this.injuryReports = new ArrayList<>();
     }
 
-    // ✅ Guice constructor
+    // 3.1 ✅ Закоментували конструктор, через який раніше впроваджували залежність
+    /*
     @Inject
     public FitnessApp(WorkoutSessionService workoutSessionService) {
         this.workoutSessionService = workoutSessionService;
         initCollections();
     }
+    */
 
-    // Якщо десь створюєш вручну — можна лишити, але save/DB тоді викликати НЕ МОЖНА
+    // Залишаємо дефолтний конструктор (Guice може його використати)
     public FitnessApp() {
-        this.workoutSessionService = null;
         initCollections();
     }
 
-    // ✅ Правильний метод збереження тренування в БД
+    // 3.2 ✅ Setter-injection через Guice
+    @Inject
+    public void setWorkoutSessionService(WorkoutSessionService workoutSessionService) {
+        this.workoutSessionService = workoutSessionService;
+    }
+
+    // ✅ Метод збереження тренування в БД
     public void saveWorkoutSessionToDb(
             String clientId,
             String sessionId,
@@ -52,7 +59,9 @@ public class FitnessApp {
             int load
     ) {
         if (workoutSessionService == null) {
-            throw new IllegalStateException("WorkoutSessionService не ініціалізовано. Створюй FitnessApp через Guice Injector.");
+            throw new IllegalStateException(
+                "WorkoutSessionService не ініціалізовано. Створюй FitnessApp через Guice Injector."
+            );
         }
 
         WorkoutSession ws = new WorkoutSession(sessionId, date, load);
@@ -61,7 +70,6 @@ public class FitnessApp {
         System.out.println("💾 Тренування збережено в БД для клієнта " + clientId + " (" + date + ")");
     }
 
-    // Зручний варіант без sessionId (генеруємо самі)
     public final void markWorkoutAndSave(
             String clientId,
             String date,
@@ -75,25 +83,21 @@ public class FitnessApp {
         saveWorkoutSessionToDb(clientId, sessionId, date, done, wellbeing, avgPulse, sleepHours, load);
     }
 
-    // Реєстрація нового клієнта
     public void registerClient(Client client) {
         clients.add(client);
         System.out.println("✅ Клієнт " + client.getName() + " зареєстрований в системі");
     }
 
-    // Додавання тренера до системи
     public void addTrainer(Trainer trainer) {
         trainers.add(trainer);
         System.out.println("✅ Тренер " + trainer.getName() + " додан до системи");
     }
 
-    // Підключення носимого пристрою (через інтерфейс)
     public void connectDevice(DataProvider device) {
         wearableDevices.add(device);
         System.out.println("✅ Пристрій підключено до системи");
     }
 
-    // ✅ ВАЖЛИВО: тут має бути fetchHealthData(), а не provideHealthData()
     public void importHealthData() {
         System.out.println("\n📥 Імпорт даних здоров'я від пристроїв:");
         for (DataProvider device : wearableDevices) {

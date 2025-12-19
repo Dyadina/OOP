@@ -29,3 +29,11 @@ DataProvider <|.. SmartWatchDataProvider
 FitnessApp --> DataProvider : constructor injection
 FitnessApp --> User
 FitnessApp --> Workout
+class FitnessApp {
+  - workoutSessionService : WorkoutSessionService
+  + setWorkoutSessionService(service : WorkoutSessionService) : void <<inject>>
+}
+
+class WorkoutSessionService
+
+FitnessApp ..> WorkoutSessionService : <<inject>> via setter

@@ -21,4 +21,10 @@ out/
 # OS файли
 .DS_Store
 Thumbs.db
-target/
+target/com.fitness.db
+# Maven
+fitness/target/
+
+# Local databases
+fitness/db/
+*.db
