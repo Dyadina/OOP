@@ -1,4 +1,5 @@
-// Клас для представлення клієнта в системі
+package com.fitness;
+
 public class Client extends User {
     // Вік клієнта
     private int age;

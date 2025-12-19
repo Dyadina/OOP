@@ -1,84 +1,39 @@
 classDiagram
-direction LR
-
-class User {
-  id : String
-  name : String
-  getName : void
-}
-
-class Trainer {
-  specialization : String
-  createMonthlyPlan : void
-  adjustLoad : void
-}
-
-class Client {
-  age : int
-  markWorkoutDone : void
-  reportInjury : void
-}
-
-User <|-- Trainer
-User <|-- Client
-
 
 class FitnessApp {
-  registerClient : void
-  connectDevice : void
-  importHealthData : void
+    -DataProvider dataProvider
+    +FitnessApp(DataProvider dataProvider)
+    +run() void
 }
-
-
-class MonthlyPlan {
-  month : String
-  goal : String
-  addWorkout : void
-  calculateAdherence : void
-}
-
-
-class Workout {
-  workoutId : String
-  date : String
-  load : int
-  markDone : void
-  setLoad : void
-}
-
-
-class InjuryReport {
-  type : String
-  description : String
-  date : String
-}
-
-
-class HealthData {
-  averagePulse : int
-  sleepHours : float
-}
-
 
 class DataProvider {
-  fetchHealthData : void
+    <<interface>>
+    +getHealthData() String
 }
 
-
-class WearableDevice {
-  deviceId : String
-  fetchHealthData : void
+class SmartWatchDataProvider {
+    +getHealthData() String
 }
 
+class User {
+    -String name
+    +User(String name)
+}
 
-DataProvider <|-- WearableDevice
+class Workout {
+    -String type
+    +Workout(String type)
+}
 
-FitnessApp o-- Client
-FitnessApp o-- WearableDevice
-MonthlyPlan *-- Workout
+DataProvider <|.. SmartWatchDataProvider
+FitnessApp --> DataProvider : constructor injection
+FitnessApp --> User
+FitnessApp --> Workout
+class FitnessApp {
+  - workoutSessionService : WorkoutSessionService
+  + setWorkoutSessionService(service : WorkoutSessionService) : void <<inject>>
+}
 
-Trainer ..> MonthlyPlan
-Trainer ..> InjuryReport
-Client ..> MonthlyPlan
-Client ..> InjuryReport
-FitnessApp ..> DataProvider
+class WorkoutSessionService
+
+FitnessApp ..> WorkoutSessionService : <<inject>> via setter

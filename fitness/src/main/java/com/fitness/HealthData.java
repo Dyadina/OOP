@@ -1,3 +1,4 @@
+package com.fitness;
 // Клас для представлення даних про здоров'я клієнта
 public class HealthData {
     // Середній пульс

@@ -1,3 +1,4 @@
+package com.fitness;
 // Клас для представлення тренера в системі
 public class Trainer extends User {
     // Спеціалізація тренера

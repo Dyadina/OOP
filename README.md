@@ -190,3 +190,17 @@ cd ..
 ## 📄 Ліцензія
 
 Відкритий проєкт для навчальних цілей.
+
+## Maven-модуль (fitness)
+
+Java-файли розміщені тут:
+- `fitness/src/main/java/com/fitness/`
+
+(Тести, якщо є)
+- `fitness/src/test/java/`
+
+### Збірка
+```bash
+cd fitness
+mvn clean install
+
